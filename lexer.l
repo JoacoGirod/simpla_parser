@@ -27,7 +27,7 @@ WS        [ \t]+
 OPT_WS    [ \t]*
 
 ORDINAL   [A-Za-zÁáÉéÍíÓóÚúÑñ]+
-ART       [Aa][Rr][Tt][ÍíiI][Cc][Uu][Ll][Oo]
+ART       [Aa][Rr][Tt][ÍíiI].?[Cc][Uu][Ll][Oo]
 ART_NUM   [0-9]+
 ART_SEP   [.:.-]+
 SUBART    [0-9]+{OPT_WS}{ART_SEP}
