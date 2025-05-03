@@ -9,7 +9,7 @@ BISON_C = parser.tab.c
 BISON_H = parser.tab.h
 
 CC = gcc
-CFLAGS = -Wall
+CFLAGS = -Wall -g
 
 all: $(EXEC)
 

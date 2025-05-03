@@ -22,12 +22,24 @@ int main() {
 %union {
   // No terminales
   void* token_lines;
-  void* article; //temp
+  // void* article; //temp
   void* subarticles; //temp
   void* body;
   
   // Terminales
   char* str;
+  struct {
+    char* type;
+    int ordinal;
+    char* original_type_text;
+    char* original_ordinal_text;
+    char* body;
+  } *div;
+  struct {
+    float ordinal;
+    char* original_ordinal_text;
+    char* body;
+  } *article;
 }
 
 %type <token_lines> token_lines
@@ -35,7 +47,9 @@ int main() {
 %type <subarticles> subarticles
 %type <body> body
 
-%token <str> DIVISION ARTICLE SUBARTICLE BODY
+%token <div> DIVISION
+%token <article> ARTICLE SUBARTICLE
+%token <str> BODY
 
 %%
 
@@ -55,14 +69,13 @@ article:
   ARTICLE body subarticles        { $$ = articleGrammarAction($1, $2, $3); }
   ;
 
-body: 
-   BODY body                      { $$ = bodyGrammarAction($1, $2); }
-  | %empty                        { $$ = NULL; }
+body:
+   BODY body                      { bodyGrammarAction($1, $2); }
+  | %empty
   ;
 
 subarticles: 
   SUBARTICLE body subarticles     { $$ = subarticleGrammarAction($1, $2, $3); }
   | %empty                        { $$ = NULL; }
-  ;
 
 %%
