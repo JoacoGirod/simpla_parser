@@ -27,7 +27,7 @@ int main() {
 
 input:
     /* empty */
-  | input token_line
+  | token_line input
   ;
 
 token_line:
