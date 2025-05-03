@@ -3,13 +3,18 @@
 #include <string.h>
 #include <stdlib.h>
 
-// Declare yylex so the parser knows about it
-int yylex(void);
+int yyparse(void);
 
 // Provide a dummy error handler
 void yyerror(const char* s) {
     fprintf(stderr, "Parse error: %s\n", s);
 }
+
+
+int main() {
+    return yyparse();
+}
+
 %}
 
 %union {

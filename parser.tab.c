@@ -73,15 +73,20 @@
 #include <string.h>
 #include <stdlib.h>
 
-// Declare yylex so the parser knows about it
-int yylex(void);
+int yyparse(void);
 
 // Provide a dummy error handler
 void yyerror(const char* s) {
     fprintf(stderr, "Parse error: %s\n", s);
 }
 
-#line 85 "parser.tab.c"
+
+int main() {
+    return yyparse();
+}
+
+
+#line 90 "parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -505,7 +510,7 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    23,    23,    25,    29,    30,    31,    32
+       0,    28,    28,    30,    34,    35,    36,    37
 };
 #endif
 
@@ -1062,31 +1067,31 @@ yyreduce:
   switch (yyn)
     {
   case 4: /* token_line: DIVISION  */
-#line 29 "parser.y"
+#line 34 "parser.y"
                { printf("DIVISION(text=\"%s\")\n", (yyvsp[0].str)); free((yyvsp[0].str)); }
-#line 1068 "parser.tab.c"
+#line 1073 "parser.tab.c"
     break;
 
   case 5: /* token_line: ARTICLE  */
-#line 30 "parser.y"
+#line 35 "parser.y"
                { printf("ARTICLE(text=\"%s\")\n", (yyvsp[0].str)); free((yyvsp[0].str)); }
-#line 1074 "parser.tab.c"
+#line 1079 "parser.tab.c"
     break;
 
   case 6: /* token_line: SUBARTICLE  */
-#line 31 "parser.y"
+#line 36 "parser.y"
                { printf("SUBARTICLE(text=\"%s\")\n", (yyvsp[0].str)); free((yyvsp[0].str)); }
-#line 1080 "parser.tab.c"
+#line 1085 "parser.tab.c"
     break;
 
   case 7: /* token_line: BODY  */
-#line 32 "parser.y"
+#line 37 "parser.y"
                { printf("BODY(text=\"%s\")\n", (yyvsp[0].str)); free((yyvsp[0].str)); }
-#line 1086 "parser.tab.c"
+#line 1091 "parser.tab.c"
     break;
 
 
-#line 1090 "parser.tab.c"
+#line 1095 "parser.tab.c"
 
       default: break;
     }
@@ -1279,5 +1284,5 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 35 "parser.y"
+#line 40 "parser.y"
 

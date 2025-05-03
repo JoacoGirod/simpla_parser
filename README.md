@@ -9,3 +9,7 @@ Flex Alone, tokenization, paving way for a bison post processing
 ```bash
 flex article_2.l; gcc lex.yy.c -o article_2; ./article_2 < example_2.txt
 ```
+## Third Version
+```bash
+clear; make ; ./parser < summary_version.txt
+```

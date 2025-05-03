@@ -36,52 +36,42 @@ SUBART    [0-9]+{OPT_WS}{ART_SEP}
 %%
 ^{OPT_WS}CAPITULO{WS}{ORDINAL}\.?{WS}.*                   {
     yylval.str = trim(yytext);
-    printf("LEXER: DIVISION(text=\"%s\")\n", yylval.str);  // Print token
     return DIVISION;
 }
 ^{OPT_WS}TITULO{WS}{ORDINAL}{WS}.*                        {
     yylval.str = trim(yytext);
-    printf("LEXER: DIVISION(text=\"%s\")\n", yylval.str);
     return DIVISION;
 }
 ^{OPT_WS}SECCION{WS}{ORDINAL}{WS}.*                       {
     yylval.str = trim(yytext);
-    printf("LEXER: DIVISION(text=\"%s\")\n", yylval.str);
     return DIVISION;
 }
 ^{OPT_WS}PRIMERA{WS}PARTE{WS}.*                           {
     yylval.str = trim(yytext);
-    printf("LEXER: DIVISION(text=\"%s\")\n", yylval.str);
     return DIVISION;
 }
 ^{OPT_WS}SEGUNDA{WS}PARTE{WS}.*                           {
     yylval.str = trim(yytext);
-    printf("LEXER: DIVISION(text=\"%s\")\n", yylval.str);
     return DIVISION;
 }
 ^{OPT_WS}DISPOSICIONES{WS}TRANSITORIAS{OPT_WS}$           {
     yylval.str = trim(yytext);
-    printf("LEXER: DIVISION(text=\"%s\")\n", yylval.str);
     return DIVISION;
 }
 ^{OPT_WS}FIRMANTES{OPT_WS}$                               {
     yylval.str = trim(yytext);
-    printf("LEXER: DIVISION(text=\"%s\")\n", yylval.str);
     return DIVISION;
 }
 ^{OPT_WS}{ART}{WS}{ART_NUM}{OPT_WS}{ART_SEP}{WS}.*            {
     yylval.str = trim(yytext);
-    printf("LEXER: ARTICLE(text=\"%s\")\n", yylval.str);
     return ARTICLE;
 }
 ^{OPT_WS}{SUBART}{WS}.*                                   {
     yylval.str = trim(yytext);
-    printf("LEXER: SUBARTICLE(text=\"%s\")\n", yylval.str);
     return SUBARTICLE;
 }
 .*                                                        {
     yylval.str = trim(yytext);
-    printf("LEXER: BODY(text=\"%s\")\n", yylval.str);
     return BODY;
 }
 %%
