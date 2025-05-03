@@ -20,39 +20,49 @@ int main() {
 %}
 
 %union {
+  // No terminales
+  void* token_lines;
+  void* article; //temp
+  void* subarticles; //temp
+  void* body;
+  
+  // Terminales
   char* str;
 }
+
+%type <token_lines> token_lines
+%type <article> article
+%type <subarticles> subarticles
+%type <body> body
 
 %token <str> DIVISION ARTICLE SUBARTICLE BODY
 
 %%
 
-input:
+program:
     /* empty */
-  | token_line input
+  | token_lines
   ;
 
-token_line:
-    DIVISION   { divisionGrammarAction($1); }
-  | article    { ; }
-  | BODY       { bodyGrammarAction($1); }
+token_lines:
+    DIVISION token_lines  { $$ =  divisionGrammarAction($1); }
+  | article token_lines   { ; }
+  | BODY token_lines      { $$ = bodyGrammarAction($1, NULL); }
+  | %empty               { $$ = NULL; }
   ;
 
 article:
-  ARTICLE body subarticles        { articleGrammarAction($1); }
-
-/* article:
-  ARTICLE NUMBER body subarticles
-  ; */
+  ARTICLE body subarticles        { $$ = articleGrammarAction($1, $2, $3); }
+  ;
 
 body: 
-   BODY body                      { bodyGrammarAction($1); }
-  | %empty
+   BODY body                      { $$ = bodyGrammarAction($1, $2); }
+  | %empty                        { $$ = NULL; }
   ;
 
 subarticles: 
-  SUBARTICLE body subarticles     { subarticleGrammarAction($1); }
-  | %empty
+  SUBARTICLE body subarticles     { $$ = subarticleGrammarAction($1, $2, $3); }
+  | %empty                        { $$ = NULL; }
   ;
 
 %%
