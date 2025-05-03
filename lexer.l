@@ -1,4 +1,5 @@
 %option noyywrap
+%option caseless
 
 %{
 #include "parser.tab.h"
@@ -26,50 +27,60 @@ char* trim(const char* str) {
 WS        [ \t]+
 OPT_WS    [ \t]*
 
-ORDINAL   [A-Za-zÁáÉéÍíÓóÚúÑñ]+
-ART       [Aa][Rr][Tt][ÍíiI].?[Cc][Uu][Ll][Oo]
-ART_NUM   [0-9]+
+A (Á|á|A|a)
+E (É|é|E|e)
+I (Í|í|I|i)
+O (Ó|ó|O|o)
+U (Ú|ú|U|u)
+
+LTR       [A-Za-zÁáÉéÍíÓóÚúÑñ]
+WRD       [A-Za-zÁáÉéÍíÓóÚúÑñ]{2,}
+
+CAP       cap{I}tulo
+TIT       t{I}tulo
+SEC       secci{O}n
+PAR       parte
+DT        disposiciones{WS}transitorias
+
+DIV       {CAP}|{TIT}|{SEC}|{PAR}|{DT}
+
+ART       art{I}culo
+ART_NUM   [º0-9]+
 ART_SEP   [.:.-]+
 SUBART    [0-9]+{OPT_WS}{ART_SEP}
 
 /* ----------- Rules Section ----------- */
 %%
-^{OPT_WS}CAPITULO{WS}{ORDINAL}\.?{WS}.*                   {
+^{OPT_WS}{DIV}{WS}{WRD}.*                      {
     yylval.str = trim(yytext);
     return DIVISION;
 }
-^{OPT_WS}TITULO{WS}{ORDINAL}{WS}.*                        {
+
+^{OPT_WS}{WRD}{WS}{PAR}.*                           {
     yylval.str = trim(yytext);
     return DIVISION;
 }
-^{OPT_WS}SECCION{WS}{ORDINAL}{WS}.*                       {
+
+^{OPT_WS}{DIV}{OPT_WS}$           {
     yylval.str = trim(yytext);
     return DIVISION;
 }
-^{OPT_WS}PRIMERA{WS}PARTE{WS}.*                           {
-    yylval.str = trim(yytext);
-    return DIVISION;
-}
-^{OPT_WS}SEGUNDA{WS}PARTE{WS}.*                           {
-    yylval.str = trim(yytext);
-    return DIVISION;
-}
-^{OPT_WS}DISPOSICIONES{WS}TRANSITORIAS{OPT_WS}$           {
-    yylval.str = trim(yytext);
-    return DIVISION;
-}
-^{OPT_WS}FIRMANTES{OPT_WS}$                               {
-    yylval.str = trim(yytext);
-    return DIVISION;
-}
+
 ^{OPT_WS}{ART}{WS}{ART_NUM}{OPT_WS}{ART_SEP}{WS}.*            {
     yylval.str = trim(yytext);
     return ARTICLE;
 }
+
 ^{OPT_WS}{SUBART}{WS}.*                                   {
     yylval.str = trim(yytext);
     return SUBARTICLE;
 }
+
+^{WRD}\..*                                          {
+    yylval.str = trim(yytext);
+    return ARTICLE;
+}
+
 .*                                                        {
     yylval.str = trim(yytext);
     return BODY;
