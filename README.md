@@ -1,7 +1,8 @@
 # What am i to do?
-- Increase information retrieved by the lexer
 - Define a proper and flexible grammar
 - Attempt to produce some useful output?
+- Improve debugging, valgrind, static checkers, gdb
+- TESTSSSSSSSSs?
 
 # Schema
 - **Documents**

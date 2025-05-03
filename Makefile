@@ -14,7 +14,7 @@ CFLAGS = -Wall -g
 all: $(EXEC)
 
 $(EXEC): $(BISON_C) $(LEX_C)
-	$(CC) $(CFLAGS) -o $(EXEC) $(BISON_C) $(LEX_C) grammar_actions.c -lfl
+	$(CC) $(CFLAGS) -o $(EXEC) $(BISON_C) $(LEX_C) grammar_actions.c lexer_utils.c -lfl
 
 $(BISON_C) $(BISON_H): $(PARSER)
 	bison -d $(PARSER)
