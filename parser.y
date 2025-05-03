@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "grammar_actions.h"
+
 int yyparse(void);
 
 // Provide a dummy error handler
@@ -31,10 +33,26 @@ input:
   ;
 
 token_line:
-    DIVISION   { printf("DIVISION(text=\"%s\")\n", $1); free($1); }
-  | ARTICLE    { printf("ARTICLE(text=\"%s\")\n", $1); free($1); }
-  | SUBARTICLE { printf("SUBARTICLE(text=\"%s\")\n", $1); free($1); }
-  | BODY       { printf("BODY(text=\"%s\")\n", $1); free($1); }
+    DIVISION   { divisionGrammarAction($1); }
+  | article    { ; }
+  | BODY       { bodyGrammarAction($1); }
+  ;
+
+article:
+  ARTICLE body subarticles        { articleGrammarAction($1); }
+
+/* article:
+  ARTICLE NUMBER body subarticles
+  ; */
+
+body: 
+   BODY body                      { bodyGrammarAction($1); }
+  | %empty
+  ;
+
+subarticles: 
+  SUBARTICLE body subarticles     { subarticleGrammarAction($1); }
+  | %empty
   ;
 
 %%
