@@ -9,6 +9,7 @@
 /* ----------- Regex Macros ----------- */
 WS        [ \t]+
 OPT_WS    [ \t]*
+endline   [\n]
 
 A (Á|á|A|a)
 E (É|é|E|e)
@@ -36,6 +37,10 @@ SUBART    [0-9]+{OPT_WS}{ART_SEP}
 
 /* ----------- Rules Section ----------- */
 %%
+"PREÁMBULO" {
+    return PREAMBULO;
+}
+
 ^{OPT_WS}{ORDINAL_WRD}{WS}{DIV}{OPT_WS}(.*) {
 
     char ordinal[ORDINAL_BUFFER_SIZE] = {0};
@@ -158,6 +163,10 @@ SUBART    [0-9]+{OPT_WS}{ART_SEP}
 
     yylval.article = art;
     return ARTICLE;
+}
+
+{endline} {
+    // ignore
 }
 
 .*                                                        {

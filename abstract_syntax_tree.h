@@ -1,6 +1,8 @@
 #ifndef ABSTRACT_SYNTAX_TREE_HEADER
 #define ABSTRACT_SYNTAX_TREE_HEADER
 
+#include "lexer_utils.h"
+
 typedef struct Body Body;
 
 struct Body {
@@ -11,9 +13,24 @@ struct Body {
 typedef struct Subarticle Subarticle;
 
 struct Subarticle {
-	const char * scentence;
+	ArticleInfo * subarticle;
 	Body * body;
     Subarticle * next_subarticle;
 };
 
+typedef struct Article Article;
+
+struct Article {
+	ArticleInfo * article;
+	Body * body;
+    Subarticle * first_subarticle;
+};
+
+typedef struct Division Division;
+
+struct Division {
+	DivisionInfo * division;
+	Body * body;
+    Article * article;
+};
 #endif

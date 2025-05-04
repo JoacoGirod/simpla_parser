@@ -21,6 +21,7 @@ int main() {
 
 %union {
   // No terminales
+  char * preambulo;
   void* token_lines;
   void* program;
   // void* article; //temp
@@ -43,15 +44,15 @@ int main() {
   } *article;
 }
 
+%type <program> program
 %type <token_lines> token_lines
 %type <article> article
 %type <subarticles> subarticles
 %type <body> body
-%type <program>
 
 %token <div> DIVISION
 %token <article> ARTICLE SUBARTICLE
-%token <str> BODY
+%token <str> PREAMBULO BODY
 
 // DEBUG VERSION
 /* input:
@@ -83,18 +84,16 @@ printf("BODY(text=\"%s\")\n", $1); free($1);
 
 ; */
 
-
 %%
 
 program:
-  | token_lines           { $$ = NULL; }
+   PREAMBULO BODY token_lines     { $$ = NULL; }
   ;
 
 token_lines:
-    DIVISION token_lines  { $$ =  divisionGrammarAction($1); }
-  | article token_lines   { ; }
-  | BODY token_lines      { $$ = bodyGrammarAction($1, NULL); }
-  | %empty               { $$ = NULL; }
+    DIVISION body token_lines     { $$ =  divisionGrammarAction($1, $2); }
+  | article token_lines           { ; }               // nos estamos pasando por los quis los articles
+  | %empty                        { $$ = NULL; }
   ;
 
 article:
@@ -102,7 +101,7 @@ article:
   ;
 
 body:
-   BODY body                      { bodyGrammarAction($1, $2); }
+   BODY body                      { $$ = bodyGrammarAction($1, $2); }
   | %empty                        { $$ = NULL; }
   ;
 

@@ -1,42 +1,58 @@
 #include "grammar_actions.h"
+#include <assert.h>
 
-int subarticleCount = 0;
-void *divisionGrammarAction(const char *division)
+
+void *divisionGrammarAction(DivisionInfo *division, Body * body)
 {
-    // printf("DIVISION(text=\"%s\")\n", division);
+    Division *new_division = (Division *)malloc(sizeof(Division));
+    new_division->division = division;
+    new_division->body = body;
+    new_division->article = NULL;
 
-    return NULL;
+    // printf("%s\n", division->type);
+    // if (body == NULL) printf("\tnull body, %s\n", division->type);
+
+    return new_division;
 }
 
-void *articleGrammarAction(const char *article, Body *body, Subarticle *subarticle)
+int subarticleCount = 0;
+void *articleGrammarAction(ArticleInfo *article, Body *body, Subarticle *subarticle)
 {
-    Body *bodyIter = body;
-    Subarticle *subarticleIter = subarticle;
-    // printf("A BODY: ");
-    // while (bodyIter != NULL) {
-    //     printf("%s ", bodyIter->scentence);
-    //     bodyIter = bodyIter->next_body;
-    // }
+    assert(article != NULL);
 
+    // Body *bodyIter = body;
+    // while (bodyIter != NULL) {
+    //         printf("%s ", bodyIter->scentence);
+    //         bodyIter = bodyIter->next_body;
+    //     }
+        
+    // Subarticle *subarticleIter = subarticle;
     // if (subarticleIter != NULL) printf("A SUBARTICLE: ");
     // while (subarticleIter != NULL) {
     //     subarticleCount += 1;
-    //     printf(subarticleCount);
-    //     // printf("%s ", subarticleIter->scentence);
+    //     // printf("%i\n", subarticleCount);
+    //     printf("%i, %s\n", subarticleIter->subarticle->ordinal, subarticleIter->subarticle->body);
     //     subarticleIter = subarticleIter->next_subarticle;
     // }
 
     // printf("ARTICLE(text=\"%s\")\n", division);
 
-    return NULL;
+    assert(article != NULL);
+
+    Article *new_article = (Article *)malloc(sizeof(Article));
+    new_article->article = article;
+    new_article->body = body;
+    new_article->first_subarticle = subarticle;
+
+    return new_article;
 }
 
-Subarticle *subarticleGrammarAction(const char *subarticle, Body *body, Subarticle *next_subarticle)
+Subarticle *subarticleGrammarAction(ArticleInfo *subarticle, Body *body, Subarticle *next_subarticle)
 {
-    return NULL;
+    assert(subarticle != NULL);
 
     Subarticle *new_subarticle = (Subarticle *)malloc(sizeof(Subarticle));
-    new_subarticle->scentence = subarticle;
+    new_subarticle->subarticle = subarticle;
     new_subarticle->body = body;
     new_subarticle->next_subarticle = next_subarticle;
 

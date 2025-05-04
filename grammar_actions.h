@@ -4,10 +4,11 @@
 #include <stdlib.h>
 
 #include "abstract_syntax_tree.h"
+#include "lexer_utils.h"
 
-void * divisionGrammarAction(const char * division);
-void * articleGrammarAction(const char * article, Body * body, Subarticle * subarticle);
-Subarticle * subarticleGrammarAction(const char * subarticle, Body * body, Subarticle * next_subarticle);
+void * divisionGrammarAction(DivisionInfo * division, Body * body);
+void * articleGrammarAction(ArticleInfo * article, Body * body, Subarticle * subarticle);
+Subarticle * subarticleGrammarAction(ArticleInfo * subarticle, Body * body, Subarticle * next_subarticle);
 Body * bodyGrammarAction(const char * scentence, Body * body);
 
 #endif

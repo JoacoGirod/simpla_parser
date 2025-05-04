@@ -52,7 +52,7 @@ const size_t ordinal_mappings_count = sizeof(ordinal_mappings) / sizeof(ordinal_
 // Takes a Type String and normalizes it, the matching is made
 char *normalize_type(const char *type)
 {
-    printf("type : <%s>\n", type);
+    // printf("type : <%s>\n", type);
 
     if (!type)
         return strdup("UNKNOWN");
