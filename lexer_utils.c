@@ -1,77 +1,99 @@
 #include "lexer_utils.h"
 
+// Normalization mappings
+const TypeMapping type_mappings[] = {
+    {"cap", "CAPITULO"},
+    {"tit", "TITULO"},
+    {"sec", "SECCION"},
+    {"parte", "PARTE"},
+    {"disposiciones", "DISPOSICIONES_TRANSITORIAS"},
+};
+const size_t type_mappings_count = sizeof(type_mappings) / sizeof(type_mappings[0]);
+
+// Ordinal mappings
+const OrdinalMapping ordinal_mappings[] = {
+    {"primero", 1},
+    {"primera", 1},
+    {"segundo", 2},
+    {"segunda", 2},
+    {"tercero", 3},
+    {"tercera", 3},
+    {"cuarto", 4},
+    {"cuarta", 4},
+    {"quinto", 5},
+    {"quinta", 5},
+    {"sexto", 6},
+    {"sexta", 6},
+    {"séptimo", 7},
+    {"séptima", 7},
+    {"octavo", 8},
+    {"octava", 8},
+    {"noveno", 9},
+    {"novena", 9},
+    {"décimo", 10},
+    {"décima", 10},
+    {"undécimo", 11},
+    {"undécima", 11},
+    {"duodécimo", 12},
+    {"duodécima", 12},
+    {"decimotercero", 13},
+    {"decimotercera", 13},
+    {"decimocuarto", 14},
+    {"decimocuarta", 14},
+    {"decimoquinto", 15},
+    {"decimoquinta", 15},
+    {"decimosexto", 16},
+    {"decimosexta", 16},
+    {"decimoséptimo", 17},
+    {"decimoséptima", 17},
+};
+const size_t ordinal_mappings_count = sizeof(ordinal_mappings) / sizeof(ordinal_mappings[0]);
+
+// Takes a Type String and normalizes it, the matching is made
 char *normalize_type(const char *type)
 {
+    printf("type : <%s>\n", type);
+
     if (!type)
         return strdup("UNKNOWN");
 
-    char lower[64];
+    // Lowercase the Type
+    char lower[TYPE_BUFFER_SIZE];
     int i = 0;
-    for (; type[i] && i < 63; ++i)
+    for (; type[i] && i < (TYPE_BUFFER_SIZE - 1); ++i)
         lower[i] = tolower((unsigned char)type[i]);
     lower[i] = '\0';
 
-    if (strstr(lower, "cap"))
-        return strdup("CAPITULO");
-    if (strstr(lower, "tit"))
-        return strdup("TITULO");
-    if (strstr(lower, "sec"))
-        return strdup("SECCION");
-    if (strstr(lower, "parte"))
-        return strdup("PARTE");
-    if (strstr(lower, "disposiciones"))
-        return strdup("DISPOSICIONES_TRANSITORIAS");
+    // Return correct mapping
+    for (size_t j = 0; j < type_mappings_count; ++j)
+        if (strstr(lower, type_mappings[j].keyword))
+            return strdup(type_mappings[j].normalized);
 
     return strdup("UNKNOWN");
 }
 
+// Takes an Ordinal String and returns its numerical Ordinal
 int ordinal_word_to_int(const char *word)
 {
     if (!word)
         return 0;
-    char lower[32];
+
+    // Lowercase the Type
+    char lower[ORDINAL_BUFFER_SIZE];
     int i = 0;
-    for (; word[i] && i < 31; ++i)
+    for (; word[i] && i < (ORDINAL_BUFFER_SIZE - 1); ++i)
         lower[i] = tolower((unsigned char)word[i]);
     lower[i] = '\0';
 
-    if (strcmp(lower, "primero") == 0 || strcmp(lower, "primera") == 0)
-        return 1;
-    if (strcmp(lower, "segundo") == 0 || strcmp(lower, "segunda") == 0)
-        return 2;
-    if (strcmp(lower, "tercero") == 0 || strcmp(lower, "tercera") == 0)
-        return 3;
-    if (strcmp(lower, "cuarto") == 0 || strcmp(lower, "cuarta") == 0)
-        return 4;
-    if (strcmp(lower, "quinto") == 0 || strcmp(lower, "quinta") == 0)
-        return 5;
-    if (strcmp(lower, "sexto") == 0 || strcmp(lower, "sexta") == 0)
-        return 6;
-    if (strcmp(lower, "séptimo") == 0 || strcmp(lower, "séptima") == 0)
-        return 7;
-    if (strcmp(lower, "octavo") == 0 || strcmp(lower, "octava") == 0)
-        return 8;
-    if (strcmp(lower, "noveno") == 0 || strcmp(lower, "novena") == 0)
-        return 9;
-    if (strcmp(lower, "décimo") == 0 || strcmp(lower, "décima") == 0)
-        return 10;
-    if (strcmp(lower, "undécimo") == 0 || strcmp(lower, "undécima") == 0)
-        return 11;
-    if (strcmp(lower, "duodécimo") == 0 || strcmp(lower, "duodécima") == 0)
-        return 12;
-    if (strcmp(lower, "decimotercero") == 0 || strcmp(lower, "decimotercera") == 0)
-        return 13;
-    if (strcmp(lower, "decimocuarto") == 0 || strcmp(lower, "decimocuarta") == 0)
-        return 14;
-    if (strcmp(lower, "decimoquinto") == 0 || strcmp(lower, "decimoquinta") == 0)
-        return 15;
-    if (strcmp(lower, "decimosexto") == 0 || strcmp(lower, "decimosexta") == 0)
-        return 16;
-    if (strcmp(lower, "decimoséptimo") == 0 || strcmp(lower, "decimoséptima") == 0)
-        return 17;
+    // Return correct mapping
+    for (size_t j = 0; j < ordinal_mappings_count; ++j)
+        if (strcmp(lower, ordinal_mappings[j].word) == 0)
+            return ordinal_mappings[j].value;
+
     return 0;
 }
 
+// Duplicate section of a String
 char *strdup_range(const char *start, const char *end)
 {
     int len = end - start;
@@ -81,6 +103,7 @@ char *strdup_range(const char *start, const char *end)
     return out;
 }
 
+// Remove prefixing and suffixing whitespace
 char *trim(const char *str)
 {
     const char *end;
