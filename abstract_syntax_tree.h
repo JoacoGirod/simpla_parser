@@ -24,6 +24,7 @@ struct Article {
 	ArticleInfo * article;
 	Body * body;
     Subarticle * first_subarticle;
+	Article * next_article;
 };
 
 typedef struct Division Division;
@@ -32,5 +33,6 @@ struct Division {
 	DivisionInfo * division;
 	Body * body;
     Article * article;
+	Division * next_division;
 };
 #endif

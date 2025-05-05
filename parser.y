@@ -21,15 +21,15 @@ int main() {
 
 %union {
   // No terminales
-  char * preambulo;
-  void* token_lines;
+  void* divisions;
   void* program;
-  // void* article; //temp
-  void* subarticles; //temp
+  void* articles;
+  void* subarticles;
   void* body;
 
   // Terminales
   char* str;
+  char * preambulo;
   struct {
     char* type;
     int ordinal;
@@ -45,7 +45,8 @@ int main() {
 }
 
 %type <program> program
-%type <token_lines> token_lines
+%type <divisions> divisions
+%type <articles> articles
 %type <article> article
 %type <subarticles> subarticles
 %type <body> body
@@ -87,17 +88,17 @@ printf("BODY(text=\"%s\")\n", $1); free($1);
 %%
 
 program:
-   PREAMBULO BODY token_lines     { $$ = NULL; }
+   PREAMBULO BODY divisions     { $$ = programGrammarAction($3); }
   ;
 
-token_lines:
-    DIVISION body token_lines     { $$ =  divisionGrammarAction($1, $2); }
-  | article token_lines           { ; }               // nos estamos pasando por los quis los articles
-  | %empty                        { $$ = NULL; }
+divisions:
+    DIVISION body articles divisions    { $$ =  divisionGrammarAction($1, $2, $3, $4); }
+  | %empty                              { $$ = NULL; }
   ;
 
-article:
-  ARTICLE body subarticles        { $$ = articleGrammarAction($1, $2, $3); }
+articles:
+  ARTICLE body subarticles articles     { $$ = articleGrammarAction($1, $2, $3, $4); }
+  | %empty                              { $$ = NULL; }
   ;
 
 body:

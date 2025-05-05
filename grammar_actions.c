@@ -1,22 +1,28 @@
 #include "grammar_actions.h"
 #include <assert.h>
 
+void * programGrammarAction(Division * division) {
+    // Aca podemos imprimir toda la estructura, hacer chiches
+    // Hay un mejor lugar para hacerlo, pero aca ya tenemos todo
 
-void *divisionGrammarAction(DivisionInfo *division, Body * body)
+
+    // OJOTA!! hay divisions sin articles: ej - PRIMERA PARTE (directamente capitulo primero despues)
+    return NULL;
+}
+
+Division *divisionGrammarAction(DivisionInfo *division, Body * body, Article * article, Division * next_division)
 {
     Division *new_division = (Division *)malloc(sizeof(Division));
     new_division->division = division;
     new_division->body = body;
-    new_division->article = NULL;
-
-    // printf("%s\n", division->type);
-    // if (body == NULL) printf("\tnull body, %s\n", division->type);
+    new_division->article = article;
+    new_division->next_division = next_division;
 
     return new_division;
 }
 
 int subarticleCount = 0;
-void *articleGrammarAction(ArticleInfo *article, Body *body, Subarticle *subarticle)
+Article *articleGrammarAction(ArticleInfo *article, Body *body, Subarticle *subarticle, Article * next_article)
 {
     assert(article != NULL);
 
@@ -43,6 +49,7 @@ void *articleGrammarAction(ArticleInfo *article, Body *body, Subarticle *subarti
     new_article->article = article;
     new_article->body = body;
     new_article->first_subarticle = subarticle;
+    new_article->next_article = next_article;
 
     return new_article;
 }
