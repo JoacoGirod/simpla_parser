@@ -1,12 +1,50 @@
 #include "grammar_actions.h"
 #include <assert.h>
 
-void * programGrammarAction(Division * division) {
-    // Aca podemos imprimir toda la estructura, hacer chiches
-    // Hay un mejor lugar para hacerlo, pero aca ya tenemos todo
+void printBody(FILE *out, Body *body) {
+    Body *bodyIter = body;
+    while (bodyIter != NULL) {
+        fprintf(out, "%s ", bodyIter->scentence);
+        bodyIter = bodyIter->next_body;
+    }
+}
 
+void printSubarticles(FILE *out, Subarticle *subarticle) {
+    Subarticle *subarticleIter = subarticle;
+    while (subarticleIter != NULL) {
+        fprintf(out, "%.0f. %s ", subarticleIter->subarticle->ordinal, subarticleIter->subarticle->body);
+        printBody(out, subarticleIter->body);
+        fprintf(out, "- ");
+        subarticleIter = subarticleIter->next_subarticle;
+    }
+}
 
-    // OJOTA!! hay divisions sin articles: ej - PRIMERA PARTE (directamente capitulo primero despues)
+void printArticle(FILE *out, Article *article) {
+    fprintf(out, "Artículo %.1f. %s ", article->article->ordinal, article->article->body);
+    printBody(out, article->body);
+    printSubarticles(out, article->first_subarticle);
+    fprintf(out, "\n");
+}
+
+void * programGrammarAction(Division *division) {
+    const char * filename = "constitucion-out.txt";
+    FILE *out = fopen(filename, "w");
+    if (!out) {
+        perror("Error opening file");
+        return NULL;
+    }
+
+    Division *divisionIter = division;
+    while (divisionIter != NULL) {
+        Article *articleIter = divisionIter->article;
+        while (articleIter != NULL) {
+            printArticle(out, articleIter);
+            articleIter = articleIter->next_article;
+        }
+        divisionIter = divisionIter->next_division;
+    }
+
+    fclose(out);
     return NULL;
 }
 
@@ -25,22 +63,7 @@ int subarticleCount = 0;
 Article *articleGrammarAction(ArticleInfo *article, Body *body, Subarticle *subarticle, Article * next_article)
 {
     assert(article != NULL);
-
-    // Body *bodyIter = body;
-    // while (bodyIter != NULL) {
-    //         printf("%s ", bodyIter->scentence);
-    //         bodyIter = bodyIter->next_body;
-    //     }
         
-    // Subarticle *subarticleIter = subarticle;
-    // if (subarticleIter != NULL) printf("A SUBARTICLE: ");
-    // while (subarticleIter != NULL) {
-    //     subarticleCount += 1;
-    //     // printf("%i\n", subarticleCount);
-    //     printf("%i, %s\n", subarticleIter->subarticle->ordinal, subarticleIter->subarticle->body);
-    //     subarticleIter = subarticleIter->next_subarticle;
-    // }
-
     // printf("ARTICLE(text=\"%s\")\n", division);
 
     assert(article != NULL);
