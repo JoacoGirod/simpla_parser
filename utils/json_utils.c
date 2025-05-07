@@ -1,0 +1,64 @@
+#include "json_utils.h"
+#include <glib.h>
+
+void writeToFile(cJSON * json, char * fileName) {
+    char *json_str = cJSON_Print(json); 
+
+    FILE *fp = fopen(fileName, "w"); 
+    if (fp == NULL) { 
+        printf("Error: Unable to open the file.\n"); 
+        return 1; 
+    } 
+
+    printf("%s\n", json_str); 
+    fputs(json_str, fp); 
+    fclose;
+
+    cJSON_free(json_str); 
+    cJSON_Delete(json); 
+}
+
+cJSON * initializeArray() {
+    return cJSON_CreateArray(); 
+}
+
+void appendBodyString(GString * str, Body * body) {
+    Body *bodyIter = body;
+    while (bodyIter != NULL) {
+        g_string_append(str, " ");
+        g_string_append(str, bodyIter->scentence);
+        bodyIter = bodyIter->next_body;
+    }
+}
+
+void appendSubarticleString(GString * str, Subarticle * subarticle) {
+    Subarticle *subarticleIter = subarticle;
+    while (subarticleIter != NULL) {
+        g_string_append_printf(str, " %.0f. %s", subarticleIter->subarticle->ordinal, subarticleIter->subarticle->body);
+        appendBodyString(str, subarticleIter->body);
+        g_string_append(str, " -");
+        subarticleIter = subarticleIter->next_subarticle;
+    }
+}
+
+char * generateArticleText(Article * article) {
+    GString *str = g_string_new("");
+
+    g_string_append(str, article->article->body);
+    appendBodyString(str, article->body);
+    appendSubarticleString(str, article->first_subarticle);
+
+    return str->str;
+}
+
+cJSON * createArticle(Article * article) {
+    cJSON *articleJson = cJSON_CreateObject(); 
+
+    cJSON_AddNumberToObject(articleJson, "article_number", article->article->ordinal); 
+    cJSON_AddStringToObject(articleJson, "text", generateArticleText(article)); 
+    cJSON_AddStringToObject(articleJson, "date", "03-01-1995"); 
+    cJSON_AddStringToObject(articleJson, "source", "https://servicios.infoleg.gob.ar/infolegInternet/anexos/0-4999/804/norma.htm"); 
+    cJSON_AddStringToObject(articleJson, "chunk_type", "article"); 
+
+    return articleJson;
+}

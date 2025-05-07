@@ -1,65 +1,24 @@
 #include "grammar_actions.h"
+#include "./utils/json_utils.h"
 #include <assert.h>
 
-void printBody(FILE *out, Body *body) {
-    Body *bodyIter = body;
-    while (bodyIter != NULL) {
-        fprintf(out, "%s ", bodyIter->scentence);
-        bodyIter = bodyIter->next_body;
-    }
-}
-
-void printSubarticles(FILE *out, Subarticle *subarticle) {
-    Subarticle *subarticleIter = subarticle;
-    while (subarticleIter != NULL) {
-        fprintf(out, "%.0f. %s ", subarticleIter->subarticle->ordinal, subarticleIter->subarticle->body);
-        printBody(out, subarticleIter->body);
-        fprintf(out, "- ");
-        subarticleIter = subarticleIter->next_subarticle;
-    }
-}
-
-void printArticle(FILE *out, Article *article) {
-    fprintf(out, "{\n");
-    fprintf(out, "\"article_number\": %.1f,\n", article->article->ordinal);
-    fprintf(out, "\"text\": \"%s ", article->article->body);
-    printBody(out, article->body);
-    printSubarticles(out, article->first_subarticle);
-    fprintf(out, "\",\n");
-    fprintf(out, "\"date\": \"03-01-1995\",\n");
-    fprintf(out, "\"source\": \"%s\",\n", "https://servicios.infoleg.gob.ar/infolegInternet/anexos/0-4999/804/norma.htm");
-    fprintf(out, "\"chunk_type\": \"article\"\n");
-    fprintf(out, "}");
-}
 
 void * programGrammarAction(Division *division) {
-    const char * filename = "constitucion-out.json";
-    FILE *out = fopen(filename, "w");
-    if (!out) {
-        perror("Error opening file");
-        return NULL;
-    }
-
+    cJSON * articleArrayJson = initializeArray();
+    
     Division *divisionIter = division;
-    fprintf(out, "[\n");
-    int articleCount = 0;
     while (divisionIter != NULL) {
         Article *articleIter = divisionIter->article;
-        while (articleIter != NULL) {
-            if (articleCount++) {
-                fprintf(out, ",\n");
-            }
-            
-            printArticle(out, articleIter);
-            // if (articleIter->article->ordinal == 1) { printArticle(out, articleIter); fclose(out); return NULL; }
-
+        while (articleIter != NULL) {            
+            cJSON * articleJson = createArticle(articleIter);
+            cJSON_AddItemToArray(articleArrayJson, articleJson);
             articleIter = articleIter->next_article;
         }
         divisionIter = divisionIter->next_division;
     }
-    fprintf(out, "]\n");
 
-    fclose(out);
+    writeToFile(articleArrayJson, "constitucion-out.json");
+
     return NULL;
 }
 

@@ -91,3 +91,9 @@ clear; make ; ./parser < ./resources/test/test_structure.txt
 ```bash
 clear; make ; ./parser < ./resources/documents/constitucion_nacional.txt
 ```
+## External libraries:
+```bash
+sudo apt install libglib2.0-dev
+
+sudo apt-get install libcjson-dev
+```
