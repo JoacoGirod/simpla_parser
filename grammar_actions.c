@@ -9,9 +9,8 @@ void * programGrammarAction(Division *division) {
     Division *divisionIter = division;
     while (divisionIter != NULL) {
         Article *articleIter = divisionIter->article;
-        while (articleIter != NULL) {            
-            cJSON * articleJson = createArticle(articleIter);
-            cJSON_AddItemToArray(articleArrayJson, articleJson);
+        while (articleIter != NULL) {        
+            addArticleToArray(articleArrayJson, articleIter);
             articleIter = articleIter->next_article;
         }
         divisionIter = divisionIter->next_division;

@@ -9,6 +9,7 @@ void writeToFile(cJSON * json, char * fileName);
 cJSON * initializeArray();
 
 
-cJSON * createArticle(Article * article);
+void addArticleToArray(cJSON * articleArrayJson, Article * article);
+// cJSON * createArticle(Article * article); // - now local
 
 #endif

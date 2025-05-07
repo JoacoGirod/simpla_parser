@@ -7,12 +7,12 @@ void writeToFile(cJSON * json, char * fileName) {
     FILE *fp = fopen(fileName, "w"); 
     if (fp == NULL) { 
         printf("Error: Unable to open the file.\n"); 
-        return 1; 
+        return ; 
     } 
 
-    printf("%s\n", json_str); 
+    // printf("%s\n", json_str); 
     fputs(json_str, fp); 
-    fclose;
+    fclose(fp);
 
     cJSON_free(json_str); 
     cJSON_Delete(json); 
@@ -61,4 +61,9 @@ cJSON * createArticle(Article * article) {
     cJSON_AddStringToObject(articleJson, "chunk_type", "article"); 
 
     return articleJson;
+}
+
+void addArticleToArray(cJSON * articleArrayJson, Article * article) {
+    cJSON * articleJson = createArticle(article);
+    cJSON_AddItemToArray(articleArrayJson, articleJson);
 }
