@@ -20,14 +20,20 @@ void printSubarticles(FILE *out, Subarticle *subarticle) {
 }
 
 void printArticle(FILE *out, Article *article) {
-    fprintf(out, "Artículo %.1f. %s ", article->article->ordinal, article->article->body);
+    fprintf(out, "{\n");
+    fprintf(out, "\"article_number\": %.1f,\n", article->article->ordinal);
+    fprintf(out, "\"text\": \"%s ", article->article->body);
     printBody(out, article->body);
     printSubarticles(out, article->first_subarticle);
-    fprintf(out, "\n");
+    fprintf(out, "\",\n");
+    fprintf(out, "\"date\": \"03-01-1995\",\n");
+    fprintf(out, "\"source\": \"%s\",\n", "https://servicios.infoleg.gob.ar/infolegInternet/anexos/0-4999/804/norma.htm");
+    fprintf(out, "\"chunk_type\": \"article\"\n");
+    fprintf(out, "}");
 }
 
 void * programGrammarAction(Division *division) {
-    const char * filename = "constitucion-out.txt";
+    const char * filename = "constitucion-out.json";
     FILE *out = fopen(filename, "w");
     if (!out) {
         perror("Error opening file");
@@ -35,14 +41,23 @@ void * programGrammarAction(Division *division) {
     }
 
     Division *divisionIter = division;
+    fprintf(out, "[\n");
+    int articleCount = 0;
     while (divisionIter != NULL) {
         Article *articleIter = divisionIter->article;
         while (articleIter != NULL) {
+            if (articleCount++) {
+                fprintf(out, ",\n");
+            }
+            
             printArticle(out, articleIter);
+            // if (articleIter->article->ordinal == 1) { printArticle(out, articleIter); fclose(out); return NULL; }
+
             articleIter = articleIter->next_article;
         }
         divisionIter = divisionIter->next_division;
     }
+    fprintf(out, "]\n");
 
     fclose(out);
     return NULL;

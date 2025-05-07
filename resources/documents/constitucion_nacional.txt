@@ -82,7 +82,7 @@ Artículo 33.- Las declaraciones, derechos y garantías que enumera la Constituc
 
 Artículo 34.- Los jueces de las cortes federales no podrán serlo al mismo tiempo de los tribunales de provincia, ni el servicio federal, tanto en lo civil como en lo militar da residencia en la provincia en que se ejerza, y que no sea la del domicilio habitual del empleado, entendiéndose esto para los efectos de optar a empleos en la provincia en que accidentalmente se encuentren.
 
-Artículo 35.- Las denominaciones adoptadas sucesivamente desde 1810 hasta el presente, a saber: Provincias Unidas del Río de la Plata, República Argentina, Confederación Argentina, serán en adelante nombres oficiales indistintamente para la designación del Gobierno y territorio de las provincias, empleándose las palabras "Nación Argentina" en la formación y sanción de las leyes.
+Artículo 35.- Las denominaciones adoptadas sucesivamente desde 1810 hasta el presente, a saber: Provincias Unidas del Río de la Plata, República Argentina, Confederación Argentina, serán en adelante nombres oficiales indistintamente para la designación del Gobierno y territorio de las provincias, empleándose las palabras \"Nación Argentina\" en la formación y sanción de las leyes.
 
 CAPÍTULO SEGUNDO
 
@@ -388,7 +388,7 @@ CAPÍTULO PRIMERO
 
 De su naturaleza y duración
 
-Artículo 87.- El Poder Ejecutivo de la Nación será desempeñado por un ciudadano con el título de "Presidente de la Nación Argentina".
+Artículo 87.- El Poder Ejecutivo de la Nación será desempeñado por un ciudadano con el título de \"Presidente de la Nación Argentina\".
 
 Artículo 88.- En caso de enfermedad, ausencia de la Capital, muerte, renuncia o destitución del Presidente, el Poder Ejecutivo será ejercido por el vicepresidente de la Nación. En caso de destitución, muerte, dimisión o inhabilidad del Presidente y vicepresidente de la Nación, el Congreso determinará qué funcionario público ha de desempeñar la Presidencia, hasta que haya cesado la causa de la inhabilidad o un nuevo presidente sea electo.
 
@@ -400,7 +400,7 @@ Artículo 91.- El Presidente de la Nación cesa en el poder el mismo día en que
 
 Artículo 92.- El Presidente y vicepresidente disfrutan de un sueldo pagado por el Tesoro de la Nación, que no podrá ser alterado en el período de sus nombramientos. Durante el mismo período no podrán ejercer otro empleo, ni recibir ningún otro emolumento de la Nación, ni de provincia alguna.
 
-Artículo 93.- Al tomar posesión de su cargo el presidente y vicepresidente prestarán juramento, en manos del presidente del Senado y ante el Congreso reunido en Asamblea, respetando sus creencias religiosas, de "desempeñar con lealtad y patriotismo el cargo de Presidente (o vicepresidente) de la Nación y observar y hacer observar fielmente la Constitución de la Nación Argentina".
+Artículo 93.- Al tomar posesión de su cargo el presidente y vicepresidente prestarán juramento, en manos del presidente del Senado y ante el Congreso reunido en Asamblea, respetando sus creencias religiosas, de \"desempeñar con lealtad y patriotismo el cargo de Presidente (o vicepresidente) de la Nación y observar y hacer observar fielmente la Constitución de la Nación Argentina\".
 
 CAPÍTULO SEGUNDO
 
