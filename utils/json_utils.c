@@ -1,7 +1,7 @@
 #include "json_utils.h"
 #include <glib.h>
 
-void writeToFile(cJSON * json, char * fileName) {
+void writeToFile(cJSON * json, const char * fileName) {
     char *json_str = cJSON_Print(json); 
 
     FILE *fp = fopen(fileName, "w"); 

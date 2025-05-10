@@ -5,6 +5,7 @@
 
 #include "abstract_syntax_tree.h"
 #include "lexer_utils.h"
+#include "shared.h"
 
 void * programGrammarAction(Division * division);
 Division * divisionGrammarAction(DivisionInfo * division, Body * body, Article * article, Division * next_division);

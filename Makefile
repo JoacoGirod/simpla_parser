@@ -16,7 +16,7 @@ GLIB_LIBS = $(shell $(PKG_CONFIG) --libs glib-2.0)
 all: $(EXEC)
 
 $(EXEC): $(BISON_C) $(LEX_C)
-	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -o $(EXEC) $(BISON_C) $(LEX_C) grammar_actions.c lexer_utils.c ./utils/json_utils.c -lfl -lcjson $(GLIB_LIBS)
+	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -o $(EXEC) $(BISON_C) $(LEX_C) main.c grammar_actions.c lexer_utils.c ./utils/*.c -lfl -lcjson $(GLIB_LIBS)
 
 $(BISON_C) $(BISON_H): $(PARSER)
 	bison -d $(PARSER)

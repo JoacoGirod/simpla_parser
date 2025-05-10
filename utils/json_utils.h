@@ -5,7 +5,7 @@
 #include <cjson/cJSON.h> 
 #include "../abstract_syntax_tree.h"
 
-void writeToFile(cJSON * json, char * fileName);
+void writeToFile(cJSON * json, const char * fileName);
 cJSON * initializeArray();
 
 

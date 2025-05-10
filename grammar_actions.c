@@ -1,22 +1,8 @@
 #include "grammar_actions.h"
-#include "./utils/json_utils.h"
 #include <assert.h>
 
-
 void * programGrammarAction(Division *division) {
-    cJSON * articleArrayJson = initializeArray();
-    
-    Division *divisionIter = division;
-    while (divisionIter != NULL) {
-        Article *articleIter = divisionIter->article;
-        while (articleIter != NULL) {        
-            addArticleToArray(articleArrayJson, articleIter);
-            articleIter = articleIter->next_article;
-        }
-        divisionIter = divisionIter->next_division;
-    }
-
-    writeToFile(articleArrayJson, "constitucion-out.json");
+    state.first_division = division;
 
     return NULL;
 }
@@ -37,7 +23,7 @@ Article *articleGrammarAction(ArticleInfo *article, Body *body, Subarticle *suba
 {
     assert(article != NULL);
         
-    // printf("ARTICLE(text=\"%s\")\n", division);
+    // printf("ARTICLE(text=\"%s\")\n", article->body);
 
     assert(article != NULL);
 
@@ -67,6 +53,8 @@ Body *bodyGrammarAction(const char *scentence, Body *body)
     Body *new_body = (Body *)malloc(sizeof(Body));
     new_body->scentence = scentence;
     new_body->next_body = body;
+
+    // printf("BODY(text=\"%s\")\n", scentence);
 
     return new_body;
 }

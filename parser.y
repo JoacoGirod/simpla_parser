@@ -1,21 +1,6 @@
 %{
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 
 #include "grammar_actions.h"
-
-int yyparse(void);
-
-// Provide a dummy error handler
-void yyerror(const char* s) {
-    fprintf(stderr, "Parse error: %s\n", s);
-}
-
-
-int main() {
-    return yyparse();
-}
 
 %}
 
@@ -89,6 +74,7 @@ printf("BODY(text=\"%s\")\n", $1); free($1);
 
 program:
    PREAMBULO BODY divisions     { $$ = programGrammarAction($3); }
+  | body divisions              { $$ = programGrammarAction($2); }
   ;
 
 divisions:
