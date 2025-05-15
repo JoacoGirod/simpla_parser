@@ -12,7 +12,7 @@ int yyparse(void);
 // Provide a dummy error handler
 void yyerror(const char *s)
 {
-    fprintf(stderr, "Parse error: %s\n", s);
+    fprintf(stderr, "Parse error at line %d: %s (token: \'%s\')\n", yylineno, s, yytext);
 }
 
 CompilerState state;

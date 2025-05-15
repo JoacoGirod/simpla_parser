@@ -3,3 +3,6 @@ parser
 parser.tab.c
 parser.tab.h
 .vscode
+
+/constituciones-out
+*.json
