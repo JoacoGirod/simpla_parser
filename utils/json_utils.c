@@ -2,6 +2,46 @@
 #include <glib.h>
 #include <errno.h>
 
+char *extract_province_name(const char *filename)
+{
+    const char *de_pos = NULL;
+    const char *search = filename;
+
+    // Find the last "De_" occurrence
+    while ((search = strstr(search, "De_")) != NULL)
+    {
+        de_pos = search;
+        search += 3;
+    }
+
+    if (!de_pos)
+        return NULL;
+
+    de_pos += 3; // Move past "De_"
+    const char *end = strstr(de_pos, ".json");
+    if (!end)
+        return NULL;
+
+    size_t len = end - de_pos;
+    char *raw = malloc(len + 1);
+    if (!raw)
+        return NULL;
+
+    strncpy(raw, de_pos, len);
+    raw[len] = '\0';
+
+    // Convert underscores to spaces and lowercase first letter
+    for (size_t i = 0; i < len; i++)
+    {
+        if (raw[i] == '_')
+        {
+            raw[i] = ' ';
+        }
+    }
+
+    return raw;
+}
+
 void writeToFile(cJSON *json, const char *fileName)
 {
     char *json_str = cJSON_Print(json);
@@ -63,7 +103,7 @@ char *generateArticleText(Article *article)
     return str->str;
 }
 
-cJSON *createArticle(Article *article)
+cJSON *createArticle(Article *article, char *output_path)
 {
     cJSON *articleJson = cJSON_CreateObject();
 
@@ -72,13 +112,14 @@ cJSON *createArticle(Article *article)
     cJSON_AddStringToObject(articleJson, "date", "03-01-1995");
     cJSON_AddStringToObject(articleJson, "source", "https://servicios.infoleg.gob.ar/infolegInternet/anexos/0-4999/804/norma.htm");
     cJSON_AddStringToObject(articleJson, "chunk_type", "article");
+    cJSON_AddStringToObject(articleJson, "province", extract_province_name(output_path));
 
     return articleJson;
 }
 
-void addArticleToArray(cJSON *articleArrayJson, Article *article)
+void addArticleToArray(cJSON *articleArrayJson, Article *article, char *output_path)
 {
-    cJSON *articleJson = createArticle(article);
+    cJSON *articleJson = createArticle(article, output_path);
     cJSON_AddItemToArray(articleArrayJson, articleJson);
 }
 
@@ -117,7 +158,7 @@ cJSON *createOnlyArticle(Article *article)
     return articleJson;
 }
 
-cJSON *createSubarticle(Article *article, Subarticle * subarticle)
+cJSON *createSubarticle(Article *article, Subarticle *subarticle)
 {
     cJSON *articleJson = cJSON_CreateObject();
 
@@ -134,12 +175,12 @@ void addArticleAndSubarticlesToArray(cJSON *articleArrayJson, Article *article)
 {
     cJSON *articleJson = createOnlyArticle(article);
     cJSON_AddItemToArray(articleArrayJson, articleJson);
-    
-    Subarticle * subarticleIter = article->first_subarticle;
-    while (subarticleIter != NULL) {
+
+    Subarticle *subarticleIter = article->first_subarticle;
+    while (subarticleIter != NULL)
+    {
         cJSON *subarticleJson = createSubarticle(article, subarticleIter);
         cJSON_AddItemToArray(articleArrayJson, subarticleJson);
         subarticleIter = subarticleIter->next_subarticle;
     }
-
 }

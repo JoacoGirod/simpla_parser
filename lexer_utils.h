@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#define BODY_BUFFER_SIZE 4086
+#define BODY_BUFFER_SIZE 4400
 #define TYPE_BUFFER_SIZE 64
 #define ORDINAL_BUFFER_SIZE 64
 

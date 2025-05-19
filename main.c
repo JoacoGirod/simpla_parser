@@ -27,7 +27,7 @@ void writeConstitution(Division *division, const char *output_path)
         Article *articleIter = divisionIter->article;
         while (articleIter != NULL)
         {
-            addArticleToArray(articleArrayJson, articleIter);
+            addArticleToArray(articleArrayJson, articleIter, output_path);
             articleIter = articleIter->next_article;
         }
         divisionIter = divisionIter->next_division;

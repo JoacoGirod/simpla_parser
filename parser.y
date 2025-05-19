@@ -41,34 +41,6 @@
 %token <str> PREAMBULO BODY
 
 // DEBUG VERSION
-/* input:
-| token_line input
-;
-
-token_line:
-DIVISION {
-	printf("DIVISION(type=\"%s\", ordinal=%d, original_type_text=\"%s\", original_ordinal_text=\"%s\", body=\"%s\")\n",
-	$1->type, $1->ordinal, $1->original_type_text, $1->original_ordinal_text, $1->body);
-	free($1->type); free($1->original_type_text); free($1->original_ordinal_text); free($1->body); free($1);
-}
-
-| ARTICLE {
-printf("ARTICLE(ordinal=%f, original_ordinal_text=\"%s\", body=\"%s\")\n",
-$1->ordinal, $1->original_ordinal_text, $1->body);
-free($1->original_ordinal_text); free($1->body); free($1);
-}
-
-| SUBARTICLE {
-printf("SUBARTICLE(ordinal=%f, original_ordinal_text=\"%s\", body=\"%s\")\n",
-$1->ordinal, $1->original_ordinal_text, $1->body);
-free($1->original_ordinal_text); free($1->body); free($1);
-}
-
-| BODY {
-printf("BODY(text=\"%s\")\n", $1); free($1);
-}
-
-; */
 
 %%
 
