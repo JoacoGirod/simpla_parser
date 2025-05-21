@@ -93,3 +93,52 @@ INSERT INTO Divisions (fk_document, fk_division, fk_division_type, ordinal, orig
 INSERT INTO Articles (fk_division, ordinal, body) VALUES (division_id_2, 1, 'La ...'); -- Extract article_id
 INSERT INTO Subarticles (fk_article, ordinal, body) VALUES (article_id, 1, 'La ...');
 ```
+
+## Constitucion Tree Structure
+```
+.
+├── Preámbulo
+├── Primera Parte
+│   └── Capítulo Primero
+│   │     └── Artículos
+│   │         └── Incisos
+│   │             └── SubIncisos
+│   └── Capítulo Segundo
+│       └── Artículos
+├── Segunda Parte
+│   ├── Título Primero
+│   │   ├── Sección Primera
+│   │   │   ├── Capítulo primero
+│   │   │   │   └── Artículos
+│   │   │   ├── Capítulo segunda
+│   │   │   │   └── Artículos
+│   │   │   ├── Capítulo tercera
+│   │   │   │   └── Artículos
+│   │   │   ├── Capítulo cuarta
+│   │   │   │   └── Artículos
+│   │   │   ├── Capítulo quinta
+│   │   │   │   └── Artículos
+│   │   │   ├── Capítulo sexta
+│   │   │   │   └── Artículos
+│   │   │   └── Capítulo séptima
+│   │   │       └── Artículos
+│   │   ├── Sección Segunda
+│   │   │   ├── Capítulo primero
+│   │   │   │   └── Artículos
+│   │   │   ├── Capítulo segunda
+│   │   │   │   └── Artículos
+│   │   │   ├── Capítulo tercera
+│   │   │   │   └── Artículos
+│   │   │   └── Capítulo cuarta
+│   │   │       └── Artículos
+│   │   ├── Sección Tercera
+│   │   │   ├── Capítulo primero
+│   │   │   │   └── Artículos
+│   │   │   └── Capítulo segunda
+│   │   │       └── Artículos
+│   │   └── Sección Cuarta
+│   └── Título Segundo
+│       └── Artículos
+└── Disposiciones Transitorias
+    └── Artículos
+```

@@ -30,7 +30,7 @@ DT        disposiciones{WS}transitorias
 
 DIV       {CAP}|{TIT}|{SEC}|{PAR}|{DT}
 
-ART       art{I}culo
+ART       (art{I}culo)|(art\.)
 ART_NUM   [º0-9]+
 ART_SEP   [.:.-]+
 SUBART    [0-9]+{OPT_WS}{ART_SEP}
@@ -150,7 +150,7 @@ SUBART    [0-9]+{OPT_WS}{ART_SEP}
     return SUBARTICLE;
 }
 
-^{ORDINAL_WRD}\.[ \t]*(.*)? {
+^{ORDINAL_WRD}[\.]*[ \t]*(.*)? {
 
     char ordinal_buf[64] = {0};
     char body[1024] = {0};
