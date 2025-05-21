@@ -50,6 +50,9 @@ typedef struct {
 
 	// El nodo raíz del AST (se usará cuando se implemente el backend).
 	Division * first_division;
+
+	Division * current_division;
+	Article * current_article;
 } CompilerState;
 
 // El estado se define e inicializa en el archivo "main.c".

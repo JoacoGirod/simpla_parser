@@ -14,7 +14,8 @@ Division *divisionGrammarAction(DivisionInfo *division, Body * body, Article * a
     new_division->body = body;
     new_division->article = article;
     new_division->next_division = next_division;
-
+    
+    state.current_division = new_division;
     return new_division;
 }
 
@@ -33,6 +34,7 @@ Article *articleGrammarAction(ArticleInfo *article, Body *body, Subarticle *suba
     new_article->first_subarticle = subarticle;
     new_article->next_article = next_article;
 
+    state.current_article = new_article;
     return new_article;
 }
 

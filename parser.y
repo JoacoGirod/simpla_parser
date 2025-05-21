@@ -32,7 +32,6 @@
 %type <program> program
 %type <divisions> divisions
 %type <articles> articles
-%type <article> article
 %type <subarticles> subarticles
 %type <body> body
 
